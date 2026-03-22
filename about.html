@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نادي الطلبة العرب - جامعة بومرداس</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --sky-blue: #87CEEB; 
+            --deep-black: #000000;
+            --glass-white: rgba(255, 255, 255, 0.9); 
+        }
+
+        /* حركات الأزرار */
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(135, 206, 235, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(135, 206, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(135, 206, 235, 0); }
+        }
+
+        @keyframes wobble {
+            0% { transform: translateX(0%); }
+            15% { transform: translateX(-5%) rotate(-5deg); }
+            30% { transform: translateX(3%) rotate(3deg); }
+            45% { transform: translateX(-3%) rotate(-3deg); }
+            60% { transform: translateX(2%) rotate(2deg); }
+            75% { transform: translateX(-1%) rotate(-1deg); }
+            100% { transform: translateX(0%); }
+        }
+
+        body, html {
+            margin: 0; padding: 0; min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: url('Logo.jpg') no-repeat center top fixed;
+            background-size: cover;
+        }
+
+        .full-page-wrapper {
+            background: rgba(0, 0, 0, 0.2); 
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 40px 0;
+        }
+
+        .logo {
+            width: 130px; height: 130px; border-radius: 50%;
+            border: 4px solid var(--sky-blue); background: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .glass-card {
+            background: var(--glass-white);
+            backdrop-filter: blur(12px);
+            width: 90%; max-width: 500px;
+            margin: 15px auto; padding: 25px;
+            border-radius: 25px; border-right: 8px solid var(--sky-blue);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        h2 { color: var(--sky-blue); margin-bottom: 15px; font-size: 1.5rem; }
+        p, li { color: var(--deep-black); font-weight: 600; line-height: 1.6; }
+
+        .social-flex { display: flex; justify-content: center; gap: 25px; margin-top: 15px; }
+        .social-btn {
+            width: 60px; height: 60px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 30px; color: white; text-decoration: none; transition: 0.3s;
+        }
+        .fb-real { background-color: #1877f2; }
+        .ig-real { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+
+        /* أزرار التنقل المتحركة */
+        .btn-main-action {
+            display: inline-block;
+            text-align: center;
+            text-decoration: none;
+            transition: 0.4s;
+            cursor: pointer;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        /* زر العودة للرئيسية الأزرق */
+        .btn-back-home {
+            background: var(--sky-blue);
+            color: var(--deep-black);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin: 20px 0;
+            border: 2px solid white;
+            animation: pulse-blue 2s infinite;
+        }
+
+        .btn-back-home:hover {
+            background: var(--deep-black);
+            color: var(--sky-blue);
+            border-color: var(--sky-blue);
+            transform: scale(1.05);
+        }
+
+        .footer-join {
+            background: var(--deep-black);
+            width: 100%; padding: 50px 20px;
+            text-align: center; margin-top: 40px;
+            border-radius: 50px 50px 0 0;
+        }
+
+        /* زر انضم إلينا المتحرك */
+        .join-btn {
+            display: inline-block;
+            background: var(--sky-blue);
+            color: var(--deep-black);
+            padding: 18px 60px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.4rem;
+            text-decoration: none;
+            margin-top: 20px;
+            animation: wobble 4s infinite ease-in-out;
+            box-shadow: 0 10px 20px rgba(135, 206, 235, 0.3);
+        }
+
+        .join-btn:hover {
+            background: white;
+            transform: scale(1.1) !important;
+            animation: none; /* توقف الحركة عند وقوف الفأرة */
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="full-page-wrapper">
+    <div class="header-section">
+        <img src="Logo.jpg" alt="Logo" class="logo">
+    </div>
+
+    <div class="glass-card">
+        <h2>نادي الطلبة العرب لجامعة بومرداس</h2>
+        <p>نادي الطلبة العرب لجامعة بومرداس هو فضاء طلابي مميز يجمع بين الشغف والإبداع، حيث يلتقي الطلبة العرب لصناعة تجربة جامعية ملهمة.</p>
+    </div>
+
+    <div class="glass-card">
+        <h2>أهدافنا</h2>
+        <ul style="padding-right: 20px;">
+            <li>تنظيم فعاليات وحفلات متميزة.</li>
+            <li>تنمية المهارات الشخصية والقيادية.</li>
+            <li>التبادل الثقافي بين الطلبة الجزائريين والوافدين.</li>
+            <li>توطيد أواصر المحبة بين شعوب الأمة الإسلامية.</li>
+        </ul>
+    </div>
+
+    <div class="glass-card" style="text-align: center;">
+        <h2 style="border:none;">تواصل معنا</h2>
+        <div class="social-flex">
+            <a href="https://www.instagram.com/boumerdes_a_a_s_club" target="_blank" class="social-btn ig-real">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=100089827059191" target="_blank" class="social-btn fb-real">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+        </div>
+    </div>
+
+    <a href="index.html" class="btn-main-action btn-back-home">
+        <i class="fas fa-home"></i> العودة للرئيسية
+    </a>
+
+    <div class="footer-join">
+        <h2 style="color:var(--sky-blue); border:none;">كن جزءاً من فريقنا</h2>
+        <p style="color: white; font-weight: normal;">املأ الاستمارة الآن وانضم إلى عائلتنا المبدعة</p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSejRKpUlScfa1bCyMjmTVA6G9LbgubSk3-GWVJxV HZfsp7RWQ/viewform?usp=header" class="join-btn">انضم إلينا الآن</a>
+    </div>
+</div>
+
+</body>
+</html>

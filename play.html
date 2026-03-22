@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تحدي المسجد الأقصى - نادي الطلبة العرب</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --main-yellow: #FFD700;
+            --pure-white: #ffffff;
+            --deep-black: #1a1a1a;
+            --error-red: #F44336;
+            --success-green: #4CAF50;
+        }
+
+        body, html {
+            margin: 0; padding: 0; min-height: 100vh;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: url('download.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.98);
+            width: 90%; max-width: 500px;
+            padding: 35px; border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            text-align: center; border: 5px solid var(--main-yellow);
+        }
+
+        /* شريط الوقت */
+        .timer-container {
+            width: 100%; height: 10px; background: #eee;
+            border-radius: 10px; margin-bottom: 25px; overflow: hidden;
+        }
+        #timer-fill {
+            height: 100%; width: 100%; background: var(--main-yellow);
+            transition: width 1s linear;
+        }
+
+        #q-counter { color: #888; font-weight: bold; margin-bottom: 10px; }
+        #question-text { color: var(--deep-black); font-size: 1.5rem; margin-bottom: 30px; line-height: 1.4; }
+
+        .option-btn {
+            display: block; width: 100%; background: var(--pure-white);
+            border: 2px solid #ddd; padding: 15px; margin-bottom: 12px;
+            border-radius: 15px; cursor: pointer; font-size: 1.1rem;
+            font-weight: 600; transition: 0.3s; color: var(--deep-black);
+        }
+
+        .option-btn:hover { border-color: var(--main-yellow); background: #fffef0; }
+        
+        /* الألوان عند الاختيار */
+        .correct { background: var(--success-green) !important; color: white !important; border-color: var(--success-green) !important; }
+        .wrong { background: var(--error-red) !important; color: white !important; border-color: var(--error-red) !important; }
+
+        #next-btn {
+            margin-top: 20px; background: var(--deep-black);
+            color: var(--main-yellow); border: none; padding: 15px 40px;
+            border-radius: 50px; font-weight: bold; cursor: pointer; 
+            display: none; font-size: 1.1rem; width: 100%;
+        }
+
+        /* شاشة النتيجة */
+        .score-circle {
+            width: 130px; height: 130px; border: 8px solid var(--main-yellow);
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; font-size: 3rem; font-weight: 900;
+            margin: 20px auto; color: var(--deep-black);
+        }
+
+        .btn-home {
+            background: var(--deep-black); color: var(--main-yellow);
+            padding: 15px; border-radius: 50px; text-decoration: none;
+            font-weight: bold; display: block; margin-top: 20px;
+            border: 2px solid var(--main-yellow);
+        }
+
+        #admin-panel {
+            display: none; text-align: right; background: #f9f9f9;
+            padding: 20px; border-radius: 20px; margin-top: 20px;
+            border: 2px dashed var(--main-yellow);
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-card" id="game-container">
+    <div id="quiz-box">
+        <div class="timer-container"><div id="timer-fill"></div></div>
+        <div id="q-counter">سؤال 1 / 10</div>
+        <div id="question-text">جاري التحميل...</div>
+        <div id="options-box"></div>
+        <button id="next-btn" onclick="handleNext()">السؤال التالي <i class="fas fa-chevron-left"></i></button>
+    </div>
+
+    <div id="result-box" style="display: none;">
+        <h2 id="status-title">النتيجة النهائية</h2>
+        <div class="score-circle" id="final-score">0</div>
+        <p id="feedback-msg" style="font-size: 1.4rem; font-weight: bold;"></p>
+        
+        <a href="index.html" class="btn-home"><i class="fas fa-home"></i> العودة للرئيسية</a>
+        <button onclick="location.reload()" style="background:none; border:none; color:#888; margin-top:15px; cursor:pointer;">إعادة المحاولة</button>
+        
+        <button onclick="showAdmin()" style="display:block; width:100%; background:none; border:none; color:#eee; font-size:0.6rem; margin-top:30px; cursor:pointer;">Admin</button>
+    </div>
+
+    <div id="admin-panel">
+        <h3 style="text-align:center;">📊 إحصائيات النظام</h3>
+        <div id="admin-stats"></div>
+        <button onclick="location.reload()" style="width:100%; padding:10px; margin-top:10px; background:black; color:white; border-radius:10px; border:none;">إغلاق</button>
+    </div>
+</div>
+
+<script>
+    // 1. مصفوفة الأسئلة
+    const questions = [
+        { q: "من الخليفة الأموي الذي شرع في بناء الجامع القبلي بشكل معماري ضخم؟", a: ["عبد الملك بن مروان","عمر بن الخطاب",  "الوليد بن عبد الملك"], c: 0 },
+        { q: "ما هي المساحة الإجمالية للمسجد الأقصى (كل ما دار عليه السور)؟", a: ["90 دونماً", "144 دونماً", "120 دونماً"], c: 1 },
+        { q: "أين تقع 'قبة السلسلة' بالنسبة لقبة الصخرة المشرفة؟", a: ["جهة الغرب", "جهة الشمال", "جهة الشرق"], c: 2 },
+        { q: "كم عدد الأبواب 'المفتوحة' حالياً في سور المسجد الأقصى؟", a: ["7 أبواب", "12 باباً", "10 أبواب"], c: 2 },
+        { q: "ما هو الشكل الهندسي الذي بنيت عليه قبة الصخرة؟", a: ["سداسي الأضلاع", "مثمن الأضلاع", "دائري"], c: 1 },
+        { q: "أين تقع المئذنة الرابعة الوحيدة للمسجد الأقصى (الباقي بالغرب)؟", a: ["الجانب الشرقي", "الجانب الشمالي", "الجانب الجنوبي"], c: 1 },
+        { q: "ما هو اسم المصلى الذي يعتبر أكبر مصلى مسقوف تحت الأرض بالشرق؟", a: ["المصلى المرواني","الأقصى القديم",  "مصلى البراق"], c: 0 },
+        { q: "كم يبلغ عدد آبار المياه داخل صحن المسجد الأقصى تقريباً؟", a: ["15 بئراً",  "40 بئراً" ,"25 بئراً"], c: 2 },
+        { q: "ما هو اسم الباب المزدوج 'المغلق' في السور الشرقي؟", a: ["باب الجنائز", "باب الرحمة", "باب الأسباط"], c: 1 },
+        { q: "من القائد الذي أمر بصناعة منبر الأقصى الشهير في حلب؟", a: ["نور الدين زنكي", "صلاح الدين الأيوبي", "الملك العادل"], c: 0 },
+        { q: "ما هو انطباعك حول هذا النشاط؟", a: ["ممتاز", "حسن", "سيئ"], isFeedback: true }
+    ];
+
+    let currentIndex = 0, score = 0, timer, timeLeft = 15;
+
+    // تهيئة الإحصائيات في ذاكرة المتصفح
+    if(!localStorage.getItem('alAqsaStats')) {
+        localStorage.setItem('alAqsaStats', JSON.stringify({
+            excellent: 0, good: 0, failed: 0, 
+            feedback: { ممتاز: 0, حسن: 0, سيئ: 0 }
+        }));
+    }
+
+    function loadQuestion() {
+        const q = questions[currentIndex];
+        document.getElementById("q-counter").innerText = q.isFeedback ? "تقييم النشاط" : `سؤال ${currentIndex + 1} / 10`;
+        document.getElementById("question-text").innerText = q.q;
+        document.getElementById("next-btn").style.display = "none";
+        
+        const box = document.getElementById("options-box");
+        box.innerHTML = "";
+        
+        q.a.forEach((opt, i) => {
+            const btn = document.createElement("button");
+            btn.className = "option-btn";
+            btn.innerText = opt;
+            btn.onclick = () => q.isFeedback ? saveFeedback(opt) : checkAnswer(i, btn);
+            box.appendChild(btn);
+        });
+
+        if(!q.isFeedback) startTimer();
+        else document.querySelector(".timer-container").style.display = "none";
+    }
+
+    function startTimer() {
+        timeLeft = 15;
+        clearInterval(timer);
+        document.getElementById("timer-fill").style.width = "100%";
+        timer = setInterval(() => {
+            timeLeft--;
+            document.getElementById("timer-fill").style.width = (timeLeft/15*100) + "%";
+            if(timeLeft <= 0) { clearInterval(timer); handleNext(); }
+        }, 1000);
+    }
+
+    function checkAnswer(i, btn) {
+        clearInterval(timer);
+        const correct = questions[currentIndex].c;
+        const all = document.querySelectorAll(".option-btn");
+        all.forEach(b => b.style.pointerEvents = "none");
+
+        if(i === correct) {
+            btn.classList.add("correct");
+            score++;
+        } else {
+            btn.classList.add("wrong");
+            // لاحظ: لم نكشف الإجابة الصحيحة هنا بناءً على طلبك
+        }
+        document.getElementById("next-btn").style.display = "block";
+    }
+
+    function saveFeedback(val) {
+        let s = JSON.parse(localStorage.getItem('alAqsaStats'));
+        s.feedback[val]++;
+        
+        // تصنيف النتيجة النهائية للأدمن
+        if(score >= 9) s.excellent++;
+        else if(score >= 7) s.good++;
+        else s.failed++;
+
+        localStorage.setItem('alAqsaStats', JSON.stringify(s));
+        showFinalResults();
+    }
+
+    function handleNext() {
+        currentIndex++;
+        if(currentIndex < questions.length) loadQuestion();
+        else showFinalResults();
+    }
+
+    function showFinalResults() {
+        document.getElementById("quiz-box").style.display = "none";
+        document.getElementById("result-box").style.display = "block";
+        document.getElementById("final-score").innerText = `${score} / 10`;
+        
+        const msg = document.getElementById("feedback-msg");
+        if(score >= 9) { msg.innerText = "ممتاز فائز! 🏆"; msg.style.color = "var(--success-green)"; }
+        else if(score >= 7) { msg.innerText = "جيد جداً! 👏"; msg.style.color = "orange"; }
+        else { msg.innerText = "للأسف لم تفز 😞"; msg.style.color = "var(--error-red)"; }
+    }
+
+    function showAdmin() {
+        const p = prompt("كلمة مرور الأدمن:");
+        if(p === "1234") {
+            document.getElementById("result-box").style.display = "none";
+            document.getElementById("admin-panel").style.display = "block";
+            const s = JSON.parse(localStorage.getItem('alAqsaStats'));
+            document.getElementById("admin-stats").innerHTML = `
+                <div style="margin-bottom:10px;">✅ ممتاز فائز: ${s.excellent}</div>
+                <div style="margin-bottom:10px;">✨ جيد: ${s.good}</div>
+                <div style="margin-bottom:10px;">❌ لم يفز: ${s.failed}</div>
+                <hr>
+                <div style="font-weight:bold;">الآراء:</div>
+                <div>ممتاز: ${s.feedback.ممتاز} | حسن: ${s.feedback.حسن} | سيئ: ${s.feedback.سيئ}</div>
+            `;
+        }
+    }
+
+    loadQuestion();
+</script>
+</body>
+</html>
