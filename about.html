@@ -4,231 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نادي الطلبة العرب - جامعة بومرداس</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
         :root {
-            --sky-blue: #87CEEB; 
-            --deep-black: #000000;
-            --glass-white: rgba(255, 255, 255, 0.9); 
+            --deep-blue: #003366;    /* الأزرق الداكن */
+            --sky-blue: #87CEEB;     /* الأزرق السماوي */
+            --light-blue: #e0f2fe;   /* أزرق فاتح للفوتر */
+            --white: #ffffff;
+            --social-gray: #666666;  /* الرمادي للأيقونات */
+            --transition: all 0.3s ease;
         }
 
-        /* حركات الأزرار */
-        @keyframes pulse-blue {
-            0% { box-shadow: 0 0 0 0 rgba(135, 206, 235, 0.7); }
-            70% { box-shadow: 0 0 0 15px rgba(135, 206, 235, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(135, 206, 235, 0); }
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Cairo', sans-serif;
+            /* الخلفية بشعار النادي واضحة تماماً كما طلبت */
+            background: url('Logo.jpg') no-repeat center center fixed;
+            background-size: contain;
+            color: #222;
+            scroll-behavior: smooth;
         }
 
-        @keyframes wobble {
-            0% { transform: translateX(0%); }
-            15% { transform: translateX(-5%) rotate(-5deg); }
-            30% { transform: translateX(3%) rotate(3deg); }
-            45% { transform: translateX(-3%) rotate(-3deg); }
-            60% { transform: translateX(2%) rotate(2deg); }
-            75% { transform: translateX(-1%) rotate(-1deg); }
-            100% { transform: translateX(0%); }
+        /* --- الشريط العلوي (Navbar) --- */
+        .navbar {
+            background: var(--white);
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .nav-logo img { height: 50px; }
+        .nav-links { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
+        .nav-links a { text-decoration: none; color: var(--deep-blue); font-weight: 700; transition: var(--transition); }
+        .nav-links a:hover { color: var(--sky-blue); }
+
+        .btn-join-nav {
+            background: var(--sky-blue); color: var(--deep-blue);
+            padding: 10px 25px; border-radius: 12px;
+            text-decoration: none; font-weight: 900; transition: var(--transition);
         }
 
-        body, html {
-            margin: 0; padding: 0; min-height: 100vh;
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            background: url('Logo.jpg') no-repeat center top fixed;
-            background-size: cover;
+        /* --- الأقسام (إطارات بيضاء ناصعة وغير شفافة) --- */
+        .main-wrapper { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        
+        .white-card {
+            background: var(--white);
+            padding: 35px; border-radius: 25px;
+            margin-bottom: 30px;
+            border-right: 12px solid var(--deep-blue);
+            box-shadow: 0 15px 45px rgba(0,0,0,0.15);
         }
 
-        .full-page-wrapper {
-            background: rgba(0, 0, 0, 0.2); 
-            min-height: 100vh;
-            display: flex; flex-direction: column; align-items: center;
-            padding: 40px 0;
+        h2 { 
+            color: var(--deep-blue); margin-top: 0; font-weight: 900;
+            border-bottom: 4px solid var(--sky-blue);
+            display: inline-block; padding-bottom: 5px; margin-bottom: 20px;
         }
 
-        .logo {
-            width: 130px; height: 130px; border-radius: 50%;
-            border: 4px solid var(--sky-blue); background: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        p, li { line-height: 1.8; font-weight: 600; font-size: 1.05rem; }
+        ul li { margin-bottom: 15px; list-style-type: none; position: relative; padding-right: 25px; }
+        ul li::before { content: "\f0a1"; font-family: "Font Awesome 5 Free"; font-weight: 900; position: absolute; right: 0; color: var(--sky-blue); }
+
+        /* لجان النادي بتنسيق خاص */
+        .committee-title { font-weight: 800; color: var(--deep-blue); display: block; font-size: 1.15rem; }
+
+        /* الموقع بالتحديد */
+        .location-box {
+            display: flex; align-items: flex-start; gap: 20px;
+            background: #f8fbff; padding: 25px; border-radius: 15px;
+            border: 2px solid var(--sky-blue);
         }
 
-        .glass-card {
-            background: var(--glass-white);
-            backdrop-filter: blur(12px);
-            width: 90%; max-width: 500px;
-            margin: 15px auto; padding: 25px;
-            border-radius: 25px; border-right: 8px solid var(--sky-blue);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        /* --- الفوتر (Footer) --- */
+        .footer {
+            background: var(--light-blue);
+            padding: 50px 20px; text-align: center;
+            border-radius: 60px 60px 0 0; margin-top: 60px;
+            border-top: 3px solid var(--sky-blue);
         }
+        .footer-logo { height: 100px; margin-bottom: 25px; }
+        .footer-btns { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
+        .btn-footer { padding: 12px 30px; border-radius: 12px; text-decoration: none; font-weight: 800; transition: var(--transition); }
+        .btn-join-f { background: var(--sky-blue); color: var(--deep-blue); }
+        .btn-home-f { background: var(--deep-blue); color: var(--white); }
 
-        h2 { color: var(--sky-blue); margin-bottom: 15px; font-size: 1.5rem; }
-        p, li { color: var(--deep-black); font-weight: 600; line-height: 1.6; }
+        .social-media { display: flex; justify-content: center; gap: 20px; margin: 25px 0; }
+        .social-box { font-size: 32px; color: var(--social-gray); text-decoration: none; transition: var(--transition); }
+        .social-box:hover { color: var(--deep-blue); transform: scale(1.1); }
 
-        .social-flex { display: flex; justify-content: center; gap: 25px; margin-top: 15px; }
-        .social-btn {
-            width: 60px; height: 60px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 30px; color: white; text-decoration: none; transition: 0.3s;
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .footer-btns { flex-direction: column; }
         }
-        .fb-real { background-color: #1877f2; }
-        .ig-real { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-
-        /* أزرار التنقل المتحركة */
-        .btn-main-action {
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
-            transition: 0.4s;
-            cursor: pointer;
-            font-family: 'Segoe UI', sans-serif;
-        }
-
-        /* زر العودة للرئيسية الأزرق */
-        .btn-back-home {
-            background: var(--sky-blue);
-            color: var(--deep-black);
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin: 20px 0;
-            border: 2px solid white;
-            animation: pulse-blue 2s infinite;
-        }
-
-        .btn-back-home:hover {
-            background: var(--deep-black);
-            color: var(--sky-blue);
-            border-color: var(--sky-blue);
-            transform: scale(1.05);
-        }
-
-        .footer-join {
-            background: var(--deep-black);
-            width: 100%; padding: 50px 20px;
-            text-align: center; margin-top: 40px;
-            border-radius: 50px 50px 0 0;
-        }
-
-        /* زر انضم إلينا المتحرك */
-        .join-btn {
-            display: inline-block;
-            background: var(--sky-blue);
-            color: var(--deep-black);
-            padding: 18px 60px;
-            border-radius: 50px;
-            font-weight: 900;
-            font-size: 1.4rem;
-            text-decoration: none;
-            margin-top: 20px;
-            animation: wobble 4s infinite ease-in-out;
-            box-shadow: 0 10px 20px rgba(135, 206, 235, 0.3);
-        }
-
-        .join-btn:hover {
-            background: white;
-            transform: scale(1.1) !important;
-            animation: none; /* توقف الحركة عند وقوف الفأرة */
-        }
-
     </style>
 </head>
 <body>
 
-<div class="full-page-wrapper">
-    <div class="header-section">
-        <img src="Logo.jpg" alt="Logo" class="logo">
-    </div>
-
-    <div class="glass-card">
-        <h2>نادي الطلبة العرب لجامعة بومرداس</h2>
-        <p>  هو نادي علمي ثقافي يجمع الطلبة العرب الوافدين من الدول العربية خاصة والطلبة الأخرين عامة, وهو أول منصة علمية عربية متعددة الجنسيات في الجزائر، تم تأسيسه لكي يجمع الطلبة المغتربين العرب و يبرز مكانة و تراث كل بلد من البلدان العربية ويبين أهمية الدين الاسلامي في هذه الدول وتقوية أواصر الأخوة والمحبة بين الدول العربية .</p>
-    </div>
-
-    <div class="glass-card">
-        <h2>أهدافنا</h2>
-        <ul style="padding-right: 20px;">
-            <p>الغرض من النادي توفير بيئة تعليمية وثقافية ورياضية للأعضاء بشكل عام والطلبة الوافدين بشكل خاص، وتشجيعهم على التفاعل والمشاركة وتنمية مهاراتهم وإمكانياته، والعمل على أفضل تطبيق لأهداف النادي.</p>
-<li> التبادل الثقافي بين الطلبة الجزائريين والطلبة الوافدين. </li>
-<li> حلقة وصل بين الطلبة الوافدين وإدارة الجامعة. </li>
-<li> الترويج للأماكن السياحية في الجزائر والبلدان العربية. </li>
-<li> إنشاء أول منصة علمية متعددة الجنسيات في الجزائر. </li>
-<li> توطيد أواصر المحبة بين شعوب الأمة الإسلامية. </li>
+    <nav class="navbar">
+        <div class="nav-logo"><img src="Logo.jpg" alt="Logo"></div>
+        <ul class="nav-links">
+            <li><a href="#about">تعريف النادي</a></li>
+            <li><a href="#goals">أهدافنا</a></li>
+            <li><a href="#committees">اللجان</a></li>
+            <li><a href="#location">موقعنا</a></li>
         </ul>
-    </div>
-    <div class="glass-card">
-        <h2>اللجان التي يضمها النادي</h2>
-        <ul style="padding-right: 20px;">
-            
-           <li> 1. اللجنة التنظيمية:
+        <a href="رابط_الاستمارة" class="btn-join-nav">انضم إلينا</a>
+    </nav>
 
-تهتم بتنظيم الفعاليات والأنشطة (حفلات، مسابقات، ملتقيات) وضمان سيرها بشكل منظم وناجح.</li>
-
-<li> 2. اللجنة الإعلامية:
-
-مسؤولة عن التصوير، تصميم المنشورات، إدارة صفحات التواصل الاجتماعي، والترويج لأنشطة النادي.</li>
-
-<li> 3. اللجنة الثقافية:
-
-تنظيم الأنشطة الثقافية للنادي، والفعاليات الخاصة بالمناسبات الدينية والوطنية والثقافية.</li>
-
-<li> 4. اللجنة العلمية:
-
-تنظيم الأنشطة العلمية والبحثية للنادي، والمحاضرات وورش العمل والندوات.</li>
-
-<li> 5. لجنة العلاقات الخارجية:
-
-إرسال الدّعوات الخاصة، والتّوجه لشُركاء النادي الاجتماعيين، وعقد شراكات مع النوادي الأخرى في الجامعة أو خارج الجامعة.</li>
-
-
-<li> 6. اللجنة الرياضية:
-
-تنظيم الأنشطة والمسابقات الرياضية لتعزيز الصحة والروح التنافسية.</li>
-        </ul>
-    </div>
-
-    
-    <div class="glass-card" style="border-right-color: var(--sky-blue); position: relative; overflow: hidden;">
-        <i class="fas fa-university" style="position: absolute; left: -20px; bottom: -20px; font-size: 8rem; color: rgba(135, 206, 235, 0.1); transform: rotate(-15deg);"></i>
+    <div class="main-wrapper">
         
-        <h2>موقعنا بالتحديد</h2>
-        <div style="display: flex; align-items: flex-start; gap: 20px; position: relative; z-index: 1;">
-            <div style="background: var(--deep-blue); color: white; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 8px 15px rgba(0, 51, 102, 0.2);">
-                <i class="fas fa-map-marked-alt" style="font-size: 1.4rem;"></i>
-            </div>
-            <div>
-                <p style="margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--deep-blue);">معهد المحروقات والكيمياء - INCH</p>
-                <p style="margin: 5px 0; font-weight: 700; color: var(--deep-black);">
-                    <i class="fas fa-door-open" style="color: var(--sky-blue); margin-left: 5px;"></i> مدرج رقم 02 (Amphi 2)
-                </p>
-                <p style="margin: 5px 0 15px 0; font-size: 0.9rem; color: #555;">جامعة امحمد بوقرة، بومرداس</p>
-                
-                <a href="https://www.google.com/maps/search/INCH+Boumerdes" 
-                   target="_blank" 
-                   style="display: inline-flex; align-items: center; gap: 8px; background: rgba(135, 206, 235, 0.2); color: var(--deep-blue); padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem; transition: var(--transition);">
-                    <i class="fas fa-location-arrow"></i> توجه للنادي عبر الخريطة
-                </a>
-            </div>
-        </div>
-    </div>
- <div class="glass-card" style="text-align: center;">
-        <h2 style="border:none;">تواصل معنا</h2>
-        <div class="social-flex">
-            <a href="https://www.instagram.com/boumerdes_a_a_s_club" target="_blank" class="social-btn ig-real">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=100089827059191" target="_blank" class="social-btn fb-real">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-        </div>
-    </div>
-    <a href="index.html" class="btn-main-action btn-back-home">
-        <i class="fas fa-home"></i> العودة للرئيسية
-    </a>
+        <section id="about" class="white-card">
+            <h2>نادي الطلبة العرب</h2>
+            <p>هو نادي علمي ثقافي يجمع الطلبة العرب الوافدين من الدول العربية خاصة والطلبة الأخرين عامة، وهو أول منصة علمية عربية متعددة الجنسيات في الجزائر. تم تأسيسه لكي يجمع الطلبة المغتربين العرب ويبرز مكانة وتراث كل بلد من البلدان العربية، وتقوية أواصر الأخوة والمحبة.</p>
+        </section>
 
-    <div class="footer-join">
-        <h2 style="color:var(--sky-blue); border:none;">كن جزءاً من فريقنا</h2>
-        <p style="color: white; font-weight: normal;">املأ الاستمارة الآن وانضم إلى عائلتنا المبدعة</p>
-        <a href="https://docs.google.com/forms/d/1zr5ck_judI4Jh-CjfQLvcqfZO8hyrSyahK0JzmGGaYQ/edit" class="join-btn"> قدم طلب الانضمام </a>
+        <section id="goals" class="white-card" style="border-right-color: var(--sky-blue);">
+            <h2>أهدافنا</h2>
+            <ul>
+                <li>التبادل الثقافي بين الطلبة الجزائريين والطلبة الوافدين.</li>
+                <li>حلقة وصل بين الطلبة الوافدين وإدارة الجامعة.</li>
+                <li>الترويج للأماكن السياحية في الجزائر والبلدان العربية.</li>
+                <li>إنشاء أول منصة علمية متعددة الجنسيات في الجزائر.</li>
+                <li>توطيد أواصر المحبة بين شعوب الأمة الإسلامية.</li>
+            </ul>
+        </section>
+
+        <section id="committees" class="white-card">
+            <h2>اللجان التي يضمها النادي</h2>
+            <ul>
+                <li><span class="committee-title">1. اللجنة التنظيمية:</span> تهتم بتنظيم الفعاليات والأنشطة وضمان سيرها بشكل ناجح.</li>
+                <li><span class="committee-title">2. اللجنة الإعلامية:</span> مسؤولة عن التصوير، التصميم، وإدارة صفحات التواصل الاجتماعي.</li>
+                <li><span class="committee-title">3. اللجنة الثقافية:</span> تنظيم الأنشطة الثقافية والفعاليات الدينية والوطنية.</li>
+                <li><span class="committee-title">4. اللجنة العلمية:</span> تنظيم البحث العلمي والمحاضرات وورش العمل.</li>
+                <li><span class="committee-title">5. لجنة العلاقات الخارجية:</span> بناء الشراكات مع النوادي والجهات المختلفة.</li>
+                <li><span class="committee-title">6. اللجنة الرياضية:</span> تنظيم المسابقات الرياضية لتعزيز الصحة والروح التنافسية.</li>
+            </ul>
+        </section>
+
+        <section id="location" class="white-card" style="border-right-color: var(--sky-blue);">
+            <h2>موقعنا بالتحديد</h2>
+            <div class="location-box">
+                <i class="fas fa-map-marked-alt" style="font-size: 2.5rem; color: var(--deep-blue);"></i>
+                <div>
+                    <p style="margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--deep-blue);">معهد المحروقات والكيمياء - INCH</p>
+                    <p style="margin: 8px 0; font-weight: 700;">
+                        <i class="fas fa-door-open" style="color: var(--sky-blue);"></i> مدرج رقم 02 (Amphi 2)
+                    </p>
+                    <p style="margin-bottom: 15px; font-size: 0.9rem; color: #666;">جامعة امحمد بوقرة، بومرداس</p>
+                    <a href="https://maps.google.com" target="_blank" style="background: var(--sky-blue); color: var(--deep-blue); padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
+                        <i class="fas fa-location-arrow"></i> توجه عبر الخريطة
+                    </a>
+                </div>
+            </div>
+        </section>
+
     </div>
-</div>
+
+    <footer class="footer">
+        <img src="Logo.jpg" alt="Logo" class="footer-logo">
+        <div class="footer-btns">
+            <a href="رابط_الاستمارة" class="btn-footer btn-join-f">انضم إلينا الآن</a>
+            <a href="index.html" class="btn-footer btn-home-f">العودة للرئيسية</a>
+        </div>
+        <div class="social-media">
+            <a href="#" class="social-box"><i class="fab fa-instagram-square"></i></a>
+            <a href="#" class="social-box"><i class="fab fa-linkedin"></i></a>
+            <a href="#" class="social-box"><i class="fab fa-facebook-square"></i></a>
+        </div>
+        <p style="color: var(--social-gray); font-weight: 600;">نادي الطلبة العرب - جامعة بومرداس &copy; 2026</p>
+    </footer>
 
 </body>
 </html>
