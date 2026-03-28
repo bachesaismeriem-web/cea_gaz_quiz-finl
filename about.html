@@ -9,43 +9,50 @@
     
     <style>
         :root {
-            --deep-blue: #003366;    /* الأزرق الداكن */
-            --sky-blue: #87CEEB;     /* الأزرق السماوي */
-            --light-blue: #e0f2fe;   /* أزرق فاتح للفوتر */
+            --deep-blue: #003366;
+            --sky-blue: #87CEEB;
+            --light-blue: #e0f2fe;
             --white: #ffffff;
-            --social-gray: #666666;  /* الرمادي للأيقونات */
+            --social-gray: #666666;
             --transition: all 0.3s ease;
         }
 
         body {
             margin: 0; padding: 0;
             font-family: 'Cairo', sans-serif;
-            /* الخلفية بشعار النادي واضحة تماماً كما طلبت */
             background: url('Logo.png') no-repeat center center fixed;
             background-size: contain;
             color: #222;
             scroll-behavior: smooth;
         }
 
-        /* --- الشريط العلوي (Navbar) --- */
+        /* --- الشريط العلوي (Navbar) المطور --- */
         .navbar {
             background: var(--white);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 10px 5%; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 5%; /* زيادة التباعد الرأسي قليلاً ليتناسب مع اللوغو الكبير */
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             position: sticky; top: 0; z-index: 1000;
         }
-        .nav-logo img { height: 50px; }
+
+        /* تكبير الشعار في الهيدر */
+        .nav-logo img { 
+            height: 80px; /* تم التكبير من 50px إلى 80px */
+            width: auto;
+            transition: var(--transition);
+        }
+
         .nav-links { display: flex; gap: 25px; list-style: none; margin: 0; padding: 0; }
         .nav-links a { text-decoration: none; color: var(--deep-blue); font-weight: 700; transition: var(--transition); }
         .nav-links a:hover { color: var(--sky-blue); }
 
         .btn-join-nav {
             background: var(--sky-blue); color: var(--deep-blue);
-            padding: 10px 25px; border-radius: 12px;
+            padding: 12px 28px; border-radius: 12px;
             text-decoration: none; font-weight: 900; transition: var(--transition);
         }
 
-        /* --- الأقسام (إطارات بيضاء ناصعة وغير شفافة) --- */
+        /* --- الأقسام --- */
         .main-wrapper { max-width: 900px; margin: 40px auto; padding: 0 20px; }
         
         .white-card {
@@ -66,24 +73,29 @@
         ul li { margin-bottom: 15px; list-style-type: none; position: relative; padding-right: 25px; }
         ul li::before { content: "\f0a1"; font-family: "Font Awesome 5 Free"; font-weight: 900; position: absolute; right: 0; color: var(--sky-blue); }
 
-        /* لجان النادي بتنسيق خاص */
         .committee-title { font-weight: 800; color: var(--deep-blue); display: block; font-size: 1.15rem; }
 
-        /* الموقع بالتحديد */
         .location-box {
             display: flex; align-items: flex-start; gap: 20px;
             background: #f8fbff; padding: 25px; border-radius: 15px;
             border: 2px solid var(--sky-blue);
         }
 
-        /* --- الفوتر (Footer) --- */
+        /* --- الفوتر (Footer) المطور --- */
         .footer {
             background: var(--light-blue);
-            padding: 50px 20px; text-align: center;
+            padding: 60px 20px; text-align: center;
             border-radius: 60px 60px 0 0; margin-top: 60px;
             border-top: 3px solid var(--sky-blue);
         }
-        .footer-logo { height: 100px; margin-bottom: 25px; }
+
+        /* تكبير الشعار في الفوتر */
+        .footer-logo { 
+            height: 150px; /* تم التكبير من 100px إلى 150px */
+            width: auto;
+            margin-bottom: 30px; 
+        }
+
         .footer-btns { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; flex-wrap: wrap; }
         .btn-footer { padding: 12px 30px; border-radius: 12px; text-decoration: none; font-weight: 800; transition: var(--transition); }
         .btn-join-f { background: var(--sky-blue); color: var(--deep-blue); }
@@ -96,6 +108,8 @@
         @media (max-width: 768px) {
             .nav-links { display: none; }
             .footer-btns { flex-direction: column; }
+            .nav-logo img { height: 60px; } /* حجم أصغر قليلاً للموبايل */
+            .footer-logo { height: 120px; }
         }
     </style>
 </head>
@@ -113,10 +127,9 @@
     </nav>
 
     <div class="main-wrapper">
-        
         <section id="about" class="white-card">
             <h2>نادي الطلبة العرب</h2>
-            <p>هو نادي علمي ثقافي يجمع الطلبة العرب الوافدين من الدول العربية خاصة والطلبة الأخرين عامة، وهو أول منصة علمية عربية متعددة الجنسيات في الجزائر. تم تأسيسه لكي يجمع الطلبة المغتربين العرب ويبرز مكانة وتراث كل بلد من البلدان العربية، وتقوية أواصر الأخوة والمحبة.</p>
+            <p>هو نادي علمي ثقافي يجمع الطلبة العرب الوافدين من الدول العربية خاصة والطلبة الأخرين عامة، وهو أول منصة علمية عربية متعددة الجنسيات في الجزائر...</p>
         </section>
 
         <section id="goals" class="white-card" style="border-right-color: var(--sky-blue);">
@@ -124,8 +137,6 @@
             <ul>
                 <li>التبادل الثقافي بين الطلبة الجزائريين والطلبة الوافدين.</li>
                 <li>حلقة وصل بين الطلبة الوافدين وإدارة الجامعة.</li>
-                <li>الترويج للأماكن السياحية في الجزائر والبلدان العربية.</li>
-                <li>إنشاء أول منصة علمية متعددة الجنسيات في الجزائر.</li>
                 <li>توطيد أواصر المحبة بين شعوب الأمة الإسلامية.</li>
             </ul>
         </section>
@@ -135,30 +146,8 @@
             <ul>
                 <li><span class="committee-title">1. اللجنة التنظيمية:</span> تهتم بتنظيم الفعاليات والأنشطة وضمان سيرها بشكل ناجح.</li>
                 <li><span class="committee-title">2. اللجنة الإعلامية:</span> مسؤولة عن التصوير، التصميم، وإدارة صفحات التواصل الاجتماعي.</li>
-                <li><span class="committee-title">3. اللجنة الثقافية:</span> تنظيم الأنشطة الثقافية والفعاليات الدينية والوطنية.</li>
-                <li><span class="committee-title">4. اللجنة العلمية:</span> تنظيم البحث العلمي والمحاضرات وورش العمل.</li>
-                <li><span class="committee-title">5. لجنة العلاقات الخارجية:</span> بناء الشراكات مع النوادي والجهات المختلفة.</li>
-                <li><span class="committee-title">6. اللجنة الرياضية:</span> تنظيم المسابقات الرياضية لتعزيز الصحة والروح التنافسية.</li>
             </ul>
         </section>
-
-        <section id="location" class="white-card" style="border-right-color: var(--sky-blue);">
-            <h2>موقعنا بالتحديد</h2>
-            <div class="location-box">
-                <i class="fas fa-map-marked-alt" style="font-size: 2.5rem; color: var(--deep-blue);"></i>
-                <div>
-                    <p style="margin: 0; font-size: 1.2rem; font-weight: 800; color: var(--deep-blue);">معهد المحروقات والكيمياء - INCH</p>
-                    <p style="margin: 8px 0; font-weight: 700;">
-                        <i class="fas fa-door-open" style="color: var(--sky-blue);"></i> مدرج رقم 02 (Amphi 2)
-                    </p>
-                    <p style="margin-bottom: 15px; font-size: 0.9rem; color: #666;">جامعة امحمد بوقرة، بومرداس</p>
-                    <a href="https://maps.google.com" target="_blank" style="background: var(--sky-blue); color: var(--deep-blue); padding: 8px 15px; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 0.9rem;">
-                        <i class="fas fa-location-arrow"></i> توجه عبر الخريطة
-                    </a>
-                </div>
-            </div>
-        </section>
-
     </div>
 
     <footer class="footer">
@@ -172,7 +161,7 @@
             <a href="#" class="social-box"><i class="fab fa-linkedin"></i></a>
             <a href="#" class="social-box"><i class="fab fa-facebook-square"></i></a>
         </div>
-        <p style="color: var(--social-gray); font-weight: 600;">نادي الطلبة العرب - جامعة بومرداس &copy; 2026</p>
+        <p style="color: var(--social-gray); font-weight: 600;">نادي الطلبة العرب - جامعة بومرداس © 2026</p>
     </footer>
 
 </body>
